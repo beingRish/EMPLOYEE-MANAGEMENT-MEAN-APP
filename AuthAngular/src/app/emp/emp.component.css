@@ -1,0 +1,58 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-center;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.card-header{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-center;
+
+}
+
+.card-header h1{
+    font-size: bold;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+.card-header button a {
+    text-decoration: none;
+    color: white;
+}
+
+
+.form-group{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.value{
+    font-size: 1.5rem;
+    display: block;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+/* noEdit */
+
+.noEdit .form-group:not(:last-child){
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 23px;
+}
+
+.noEdit .form-group label{
+    color: #9E9E9E;
+    line-height: 1;
+}

@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Employee Details</h1>
+            <button type="button" class="btn btn-success mt-2 mb-3">
+                <a  routerLink="/dashboard">Back to Dashboard</a>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="noEdit">
+                        <div class="form-group">
+                            <label>Id</label>
+                            <span class="value">{{user ? user.id: ''}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <span class="value">{{user ? user.name : ''}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <span class="value">{{user ? user.designation: ''}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Deepartment</label>
+                            <span class="value">{{user ? user.dept: ''}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <span class="value" 
+                                [ngClass]="{
+                                    'text-success': user?.status === 'Active',
+                                    'text-danger': user?.status === 'Inactive' 
+                                }">
+                                {{user ? user.status : ''}}</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 text-center mt-5">
+                    <img width="50%" height="50%" src="../../assets/images/profile2.jpg" class="img-fluid rounded" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

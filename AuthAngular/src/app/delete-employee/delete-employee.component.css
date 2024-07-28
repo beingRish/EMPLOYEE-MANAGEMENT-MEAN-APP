@@ -1,0 +1,42 @@
+button {
+    margin-right: 8px;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    background-color: gray;
+    color: white;
+}
+
+button:hover {
+    color: white !important;
+    background-color: rgb(97, 94, 94) !important;
+}
+
+.btn-primary{
+    background-color: #0b57d0 !important;
+}
+
+.btn-primary:hover{
+    background-color: #1c4a95 !important;
+}
+
+.close{
+    padding-bottom: 30px;
+    background-color: transparent !important;
+    color: rgb(61, 60, 60) !important;
+}
+
+.close:hover{
+    background-color: transparent !important;
+    color: rgb(61, 60, 60) !important;
+}
+
+
+
+::ng-deep .mdc-dialog .mdc-dialog__content {
+    padding: 0px 0px 0px 0px !important;
+}

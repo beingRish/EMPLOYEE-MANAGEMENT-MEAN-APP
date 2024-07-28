@@ -1,0 +1,118 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 1%;
+}
+
+.container-fluid{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image img{
+    width: 30%;
+}
+
+.image h2 span{
+    color: #FB2C99;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 30px;
+    gap: 100px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.Signin {
+    border: 1px #3B71CA solid;
+    width: 100%;
+    color: #3B71CA;
+}
+
+.Signin:hover {
+    background-color: #3B71CA;
+    color: white;
+}
+
+.left-side a {
+    text-decoration: none;
+    color: #3B71CA;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.divider-container {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.mat-divider {
+    flex-grow: 1;
+    margin: 0 12px;
+}
+
+.or-label {
+    color: #6c757d;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0 12px;
+}
+
+.right-side {
+    text-align: center;
+}
+
+.rightSideButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.SigninViaFacebook,
+.SigninViaGoogle {
+    border: 1px #3B71CA solid;
+    width: 100%;
+    color: #3B71CA;
+}
+
+.SigninViaGoogle img{
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+.SigninViaFacebook img{
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}
+
+.SigninViaFacebook:hover {
+    background-color: #3B71CA;
+    color: white;
+}
+
+.SigninViaGoogle:hover {
+    background-color: #3B71CA;
+    color: white;
+}
+
+.right-side h1{
+    font-size: 30px;
+    font-weight: bold;
+}

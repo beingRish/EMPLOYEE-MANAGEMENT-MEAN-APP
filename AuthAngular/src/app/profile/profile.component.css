@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-center;
+    padding: 5%;
+}
+
+.card-header{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-center;
+
+}
+
+.card-header h1{
+    font-size: bold;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+.card-header button a {
+    text-decoration: none;
+    color: white;
+}
+
+
+.fa-pencil{
+    margin-right: 5px;
+}
+
+form .buttons{
+    padding-left: 0;
+    padding-top: 15px;
+}
+
+.form-group{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.value{
+    color: #007bff;
+    font-size: 1.5rem;
+    display: block;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+/* noEdit */
+
+.noEdit .form-group:not(:last-child){
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 23px;
+}
+
+.noEdit .form-group label{
+    color: #9E9E9E;
+    line-height: 1;
+}

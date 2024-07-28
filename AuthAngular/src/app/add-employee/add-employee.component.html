@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Add Profile</h1>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()" class="noEdit">
+                <div class="form-group">
+                    <label>Enter Name</label>
+                    <div class="input-group flex-nowrap mt-2">
+                        <span class="input-group-text text-muted" id="addon-wrapping">Name</span>
+                        <input type="text" class="form-control" aria-describedby="addon-wrapping"
+                            formControlName="name">
+                    </div>
+                    <small *ngIf="!addEmployeeForm.get('name')?.valid && addEmployeeForm.get('name')?.touched"
+                        class="form-text text-muted" color="danger">Please Enter Name</small>
+                </div>
+                <div class="form-group">
+                    <label>Enter Designation</label>
+                    <div class="input-group flex-nowrap mt-2">
+                        <span class="input-group-text text-muted" id="addon-wrapping">Designation</span>
+                        <input type="text" class="form-control" aria-describedby="addon-wrapping"
+                            formControlName="designation">
+                    </div>
+                    <small
+                        *ngIf="!addEmployeeForm.get('designation')?.valid && addEmployeeForm.get('designation')?.touched"
+                        class="form-text text-muted " color="danger">
+                        Please Enter Designation
+                    </small>
+                </div>
+
+                <div class="form-group input-group mb-3  mt-3">
+                    <label class="input-group-text">Choose Department</label>
+                    <select class="form-select" formControlName="dept">
+                        <option value="Development">Development</option>
+                        <option value="HR">HR</option>
+                        <option value="Design">Design</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-group input-group mb-3  mt-3">
+                    <label class="input-group-text">Set Status</label>
+                    <select class="form-select" formControlName="status">
+                        <option class="pt-1 pb-1" value="Active">Active</option>
+                        <option class="pt-1 pb-1" value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="btn btn-secondary mx-2" (click)="onBack()">Back</button>
+                    <button type="submit" class="btn btn-primary mx-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

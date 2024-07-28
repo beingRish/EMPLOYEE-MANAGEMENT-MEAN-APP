@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Profile</h1>
+            <button type="button" class="btn btn-success mt-2 mb-3">
+                <i class="fa fa-pencil btn-sm"></i>
+                <a  routerLink="/profile" [queryParams]="{EditMode:true}">Edit Profile</a>
+            </button>
+        </div>
+        <div class="card-body">
+            <div>EditMode: 
+                <span class="badge "
+                [ngClass]="{
+                    'bg-success' : !editMode,
+                    'bg-danger' : editMode
+                }">
+                    {{editMode}}
+                </span>
+            </div>
+            <hr>
+            <form [formGroup]="Form" (ngSubmit)="onSubmit()" class="noEdit">
+                <div class="form-group">
+                    <label>{{editMode?'Enter':''}} Name</label>
+                    <span class="value" *ngIf="!editMode">{{profileInfo.displayName}}</span>
+                    <input  *ngIf="editMode"
+                        type="text" 
+                        class="form-control mt-2" 
+                        formControlName="name"
+                    >
+                    <small *ngIf="!Form.get('name')?.valid && Form.get('name')?.touched" class="form-text text-muted">Please Enter Name</small>
+                </div>
+                <div class="form-group">
+                    <label>{{editMode?'Enter Profile Picture Url':'Profile Picture'}}</label>
+                    <div class="pt-2">
+                        <img width="100" *ngIf="!editMode" src="{{profileInfo.photoUrl}}" alt="">
+                    </div>
+                    <input  *ngIf="editMode"
+                        type="text" 
+                        class="form-control mt-2" 
+                        formControlName="picture"
+                    >
+                    <small *ngIf="!Form.get('name')?.valid && Form.get('name')?.touched"  
+                        class="form-text text-muted">
+                        Please Enter Profile Url
+                    </small>
+                </div>
+
+                <div class="buttons" *ngIf="editMode">
+                    <button type="submit" class="btn btn-primary mx-2">Save Profile</button>
+                    <button type="button" class="btn btn-secondary mx-2" (click)="onDiscard()">Discard</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

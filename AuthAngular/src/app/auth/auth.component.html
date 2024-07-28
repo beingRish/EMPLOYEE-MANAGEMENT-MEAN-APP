@@ -1,0 +1,75 @@
+<div class="container">
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    <strong>An Error Occurred</strong> {{error}}
+  </div>
+  <div class="card">
+    <div class="container-fluid text-center">
+      <div class="heading image pt-5">
+        <img src="../../assets/images/angular_logo.png">
+        <h2>{{loginMode ? 'Sign In' : 'Sign Up'}} into <span>AuthAngular</span></h2>
+      </div>
+
+    </div>
+    <div class="card-group">
+      <div class="card-body">
+
+        <div class="left-side">
+          <form [formGroup]="Form" class="form" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+              <mat-label>Enter Email</mat-label>
+              <input matInput type="email" formControlName="email">
+              <mat-error *ngIf="!Form?.get('email')?.valid && Form?.get('email')?.touched">
+                Please Enter Email
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Enter Password</mat-label>
+              <input matInput type="password" formControlName="password">
+              <mat-error *ngIf="!Form.get('password')?.valid && Form?.get('password')?.touched">
+                Please Enter Password
+              </mat-error>
+            </mat-form-field>
+            <button type="submit" mat-button color="primary" class="Signin">
+              {{loginMode ? 'Sign In' : 'Create Account'}}
+            </button>
+          </form>
+          <div class="pt-5">
+            <p>
+              {{loginMode ? 'Don`t have account?': 'Already have account?'}}
+              <a (click)="onModeSwitch()">
+                {{loginMode ? 'Create one': 'Sign In'}}
+              </a>
+            </p>
+            <a  routerLink="/forget-password">Forgot Password</a>
+          </div>
+        </div>
+
+        <div class="divider-container">
+          <mat-divider></mat-divider>
+          <div class="or-label">---------- OR ----------</div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class=" right-side">
+          <h1 class="">Go with Social!</h1>
+          <h3 class="">Get started with your Social accounts</h3>
+          <div class="rightSideButton">
+            <button (click)="onGoogleSignIn()" 
+              mat-button 
+              class="SigninViaGoogle">
+              <img src="../../assets/images/google_logo.png">
+              <span class="text-muted">
+                Signin Via Google
+              </span>
+            </button>
+            <button mat-button class="SigninViaFacebook"><img src="../../assets/images/facebook_logo.png"><span
+                class="text-muted">Singin Via
+                Facebook</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

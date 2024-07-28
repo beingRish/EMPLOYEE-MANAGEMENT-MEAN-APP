@@ -1,0 +1,130 @@
+{
+    "empData2": [
+        {
+            "id": "0",
+            "name": "Rishabh Singh",
+            "designation": "Angular Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "1",
+            "name": "Ritik Singh",
+            "designation": "Web Designer",
+            "dept": "Design",
+            "status": "Active"
+        },
+        {
+            "id": "2",
+            "name": "Vishwjeet Vaibhav",
+            "designation": "React Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "3",
+            "name": "Shashank Shekhar",
+            "designation": "Hiring Manager",
+            "dept": "HR",
+            "status": "Inactive"
+        },
+        {
+            "id": "4",
+            "name": "Shuryanshu Suman",
+            "designation": "Head Administrator",
+            "dept": "Admin",
+            "status": "Inactive"
+        },
+        {
+            "id": "5",
+            "name": "Antul Kushwaha",
+            "designation": "PHP Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "6",
+            "name": "Harsh Suri",
+            "designation": "Business Developer",
+            "dept": "Development",
+            "status": "Inactive"
+        },
+        {
+            "id": "7",
+            "name": "Utkarsh Bhagat",
+            "designation": "Marketing Manager",
+            "dept": "HR",
+            "status": "Inactive"
+        },
+        {
+            "id": "9",
+            "name": "Vikash Pandey",
+            "designation": "MySQL Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "10",
+            "name": "Devendra Ukey",
+            "designation": "Networking Adminstrative",
+            "dept": "Admin",
+            "status": "Active"
+        },
+        {
+            "id": "11",
+            "name": "Shivanjali Walia",
+            "designation": "AI Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "12",
+            "name": "Pratibha Pandey",
+            "designation": "Dot Net Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "13",
+            "name": "Divyam",
+            "designation": "Software Development Trainee",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "14",
+            "name": "Rahul Bariyal",
+            "designation": "Software Designer",
+            "dept": "Design",
+            "status": "Active"
+        },
+        {
+            "id": "15",
+            "name": "Sunil Kumar",
+            "designation": "Frontend Developer",
+            "dept": "Development",
+            "status": "Active"
+        },
+        {
+            "id": "16",
+            "name": "Pankaj Kumar",
+            "designation": "Hiring Officer",
+            "dept": "HR",
+            "status": "Inactive"
+        },
+        {
+            "id": "17",
+            "name": "Divya Kande",
+            "designation": "AI Developer",
+            "dept": "Development",
+            "status": "Inactive"
+        },
+        {
+            "id": "18",
+            "name": "Aniket",
+            "designation": "Full Stack Developer",
+            "dept": "Development",
+            "status": "Active"
+        }
+    ]
+}
