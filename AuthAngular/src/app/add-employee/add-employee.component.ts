@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DeleteEmployeeComponent } from '../delete-employee/delete-employee.component';
 import { DesignUtilityService } from '../appServices/design-utility.service';
 import { Router } from '@angular/router';
 
@@ -36,13 +34,10 @@ export class AddEmployeeComponent implements OnInit{
     this.router.navigate(['/dashboard'])
   }
 
+
   onSubmit(): void {
     if (this.addEmployeeForm.valid) {
-      const newEmployee = {
-        ...this.addEmployeeForm.value,
-        id: new Date().getTime().toString()
-      };
-      this._du.saveData(newEmployee).subscribe(
+      this._du.addEmployee(this.addEmployeeForm.value).subscribe(
         (res: any) => {
           this.onBack()
           console.log('Employee added successfully', res);
@@ -52,9 +47,6 @@ export class AddEmployeeComponent implements OnInit{
       console.error('Form is invalid');
     }
   }
-
-
-
 
 }
 

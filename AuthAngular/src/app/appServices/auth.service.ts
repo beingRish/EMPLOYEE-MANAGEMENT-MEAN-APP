@@ -71,7 +71,7 @@ export class AuthService {
 
         const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
         this.autoSignOut(expirationDuration);
-        this.gerUserData(loggedInUser.token);
+        this.getUserData(loggedInUser.token);
       }
     }
   }
@@ -99,7 +99,7 @@ export class AuthService {
     this.user.next(user)  // Storing Data in User Subject
     this.autoSignOut(expiresIn*1000);
     localStorage.setItem('UserData', JSON.stringify(user)); // Soring Data in LocalStorage
-    this.gerUserData(token);
+    this.getUserData(token);
   }
 
   updateProfile(data: any){
@@ -117,7 +117,7 @@ export class AuthService {
     )
   }
 
-  gerUserData(token: any){
+  getUserData(token: any){
     this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${config.API_KEY}`,
     {
       idToken: token
@@ -154,17 +154,5 @@ export class AuthService {
     )
   }
 
-  googleSignIn(idToken: string){
-    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${config.API_KEY}`, {
-      postBody : `id_token=${idToken}&providerId=google.com`,
-      requestUri: 'http://localhost:4200',
-      returnIdpCredential : true,
-      returnSecureToken : true
-    }).pipe(
-      catchError(err => {
-        return this._errService.handleError(err)
-      })
-    )
-  }
-
+  
 }

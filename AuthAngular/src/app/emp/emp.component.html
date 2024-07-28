@@ -12,11 +12,11 @@
                     <form [formGroup]="EditEmployeeForm" (ngSubmit)="onSubmit()"  class="noEdit">
                         <div class="form-group" *ngIf="!editMode" >
                             <label>Id</label>
-                            <span class="value">{{user ? user.id: ''}}</span>
+                            <span class="value">{{Employee ? Employee._id: ''}}</span>
                         </div>
                         <div class="form-group">
                             <label>{{editMode?'Enter':''}} Name</label>
-                            <span class="value" *ngIf="!editMode">{{user ? user.name : ''}}</span>
+                            <span class="value" *ngIf="!editMode">{{Employee ? Employee.name : ''}}</span>
                             <div *ngIf="editMode" class="input-group flex-nowrap mt-2">
                                 <span class="input-group-text text-muted" id="addon-wrapping">Name</span>
                                 <input type="text" class="form-control" formControlName="name">
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{editMode?'Enter':''}} Designation</label>
-                            <span class="value" *ngIf="!editMode">{{user ? user.designation : ''}}</span>
+                            <span class="value" *ngIf="!editMode">{{Employee ? Employee.designation : ''}}</span>
                             <div *ngIf="editMode" class="input-group flex-nowrap mt-2">
                                 <span class="input-group-text text-muted" id="addon-wrapping">Designation</span>
                                 <input type="text" class="form-control" formControlName="designation">
@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label>Department</label>
-                            <span class="value" *ngIf="!editMode">{{user ? user.dept : ''}}</span>
+                            <span class="value" *ngIf="!editMode">{{Employee ? Employee.dept : ''}}</span>
                             <div class="input-group mt-2" *ngIf="editMode">
                                 <label class="input-group-text">{{editMode?'Choose':''}} Department</label>
                                 <select class="form-select" formControlName="dept">
@@ -48,10 +48,10 @@
                         <div class="form-group">
                             <label>Status</label>
                             <span class="value" *ngIf="!editMode" [ngClass]="{
-                                    'text-success': user?.status === 'Active',
-                                    'text-danger': user?.status === 'Inactive' 
+                                    'text-success': Employee?.status === 'Active',
+                                    'text-danger': Employee?.status === 'Inactive' 
                                 }">
-                                {{user ? user.status : ''}}
+                                {{Employee ? Employee.status : ''}}
                             </span>
                             <div class="input-group mt-2" *ngIf="editMode">
                                 <label class="input-group-text">{{editMode?'Set':''}} Status</label>

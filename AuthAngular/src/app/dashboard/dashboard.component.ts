@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DesignUtilityService } from '../appServices/design-utility.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteEmployeeComponent } from '../delete-employee/delete-employee.component';
 import { AuthService } from '../appServices/auth.service';
+import { Employee } from '../appInterface/emp.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   editMode!: boolean;
 
   allUsers: any[] = [];
+  employees: Employee[] = [];
+
   constructor(
     private _du: DesignUtilityService,
     private _authService: AuthService,
@@ -28,18 +30,15 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchUsers();
-    this.onGetUsers();
+    this.getEmployees()
   }
 
-  fetchUsers(): void {
-    this._du.fetchData().subscribe(
-      (res: any[]) => {
-        this.allUsers = res.map(user => ({ ...user, isDeleted: false }));
-        console.log('allUsers',this.allUsers);
-        
-      },
-    );
+  getEmployees(){
+    this._du.getEmployeeList().subscribe((res: Employee[]) => {
+      console.log(res);
+      this.employees = res;
+      
+    })
   }
 
   addEmployee() {
@@ -50,39 +49,18 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['employee', id], { queryParams: { EditMode: mode } })
   }
 
-  deleteEmployee(userId: string, enterAnimationDuration: string, exitAnimationDuration: string){
-    const dialogRef = this.dialog.open(DeleteEmployeeComponent, {
-      width: '350px',
-      data: { userId, enterAnimationDuration, exitAnimationDuration }
-    });
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'delete') {
-        this._du.deleteEmployee(userId).subscribe(
-          () => {
-            const userToDelete = this.allUsers.find(user => user.id === userId);
-            if (userToDelete) {
-              userToDelete.isDeleted = true;
-            }
-            this.fetchUsers()
-          },
-        );
-      }
-      
-    });
-  }
-
-  onGetUsers(){
-    this._du.fetchData()
-      .subscribe(
-        (res: any)=>{
-          const data = JSON.stringify(res)
+  deleteEmployee(id: string,){
+    if(confirm('Do you want to delete this Employee?')){
+      this._du.deleteEmployee(id).subscribe(
+        (res) => {
+          console.log('Deleted Successfully', res);
+          this.getEmployees();
         },
-        (err: any)=>{
+        (err) => {
           console.log(err);
         }
       )
+    }
   }
 
 }

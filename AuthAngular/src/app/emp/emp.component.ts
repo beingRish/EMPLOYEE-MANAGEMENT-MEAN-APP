@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EmpComponent implements OnInit {
 
-  user: any;
-  userId: any;
+  Employee: any;
+  employeeId: any;
   editMode!: boolean;
   EditEmployeeForm!: FormGroup;
   EmployeeInfo: any;
@@ -32,7 +32,7 @@ export class EmpComponent implements OnInit {
       status: ['', Validators.required]
     })
 
-    this.userId = this.activatedRoute.snapshot.paramMap.get('id')
+    this.employeeId = this.activatedRoute.snapshot.paramMap.get('id')
 
     this.activatedRoute.queryParamMap.subscribe(res => {
       let qParams = res.get('EditMode');
@@ -42,25 +42,24 @@ export class EmpComponent implements OnInit {
         this.editMode = false;
       }
     })
-    this.getEmployee(this.userId);
+    this.getEmployee(this.employeeId);
   }
 
-  getEmployee(userId: any) {
-    this._du.fetchSingleEmployee(userId).subscribe(res => {
-      this.user = res
-      console.log(res);
+  getEmployee(id: any) {
+    this._du.getSingleEmployee(id).subscribe(res => {
+      this.Employee = res
+      this.EditEmployeeForm.patchValue(this.Employee)
     })
   }
 
 
   onSubmit() {
+    console.log();
+    
     if (this.EditEmployeeForm.valid) {
-      const updatedEmployee = {
-        ...this.EditEmployeeForm.value,
-        id: new Date().getTime().toString()
-      };
-      this._du.updateEmployee(this.userId, updatedEmployee).subscribe(
+      this._du.updateEmployee(this.employeeId, this.EditEmployeeForm.value).subscribe(
         (res: any) => {
+          this.getEmployee(this.employeeId)
           this.onDiscard()
         },
       );

@@ -1,5 +1,4 @@
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +8,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EmpComponent } from './emp/emp.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
-import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +28,6 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
     HeaderComponent,
     DashboardComponent,
     EmpComponent,
-    DeleteEmployeeComponent,
     AddEmployeeComponent,
     AuthComponent,
     ProfileComponent,
@@ -56,24 +53,6 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        lang: 'en',
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '478322242900-juf5maa6i3p4r3ofv53bovcr40p0r42p.apps.googleusercontent.com'
-            )
-          },
-        ],
-        onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent],

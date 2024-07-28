@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { config } from '../config';
-import { map, Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Employee } from '../appInterface/emp.interface';
 
 @Injectable({
@@ -9,41 +9,29 @@ import { Employee } from '../appInterface/emp.interface';
 })
 export class DesignUtilityService {
 
-  api = config.API_URL;
+  api = config.API_URL  // mongodb api url
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  saveData(data: any) {
-    return this.http.post(`${this.api}/empData2.json`, data)
+  addEmployee(emp: Employee){
+    return this.http.post(this.api, emp);
   }
 
-  fetchData(): Observable<any> {
-    return this.http.get<Employee>(`${this.api}/empData2.json`).pipe(
-      map((resData: any) => {
-        const userArray = [];
-        for (const key in resData) {
-          if (resData.hasOwnProperty(key) && !resData[key]?.isDeleted) {
-            userArray.push({ userId: key, ...resData[key] });
-          }
-        }
-        return userArray;
-      })
-    )
+  getEmployeeList() : Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.api);
   }
 
-  fetchSingleEmployee(id: any) {
-    return this.http.get<any>(`${this.api}/empData2/${id}.json`)
-  }
-
-  deleteEmployee(id: any): Observable<any> {
-    return this.http.put(`${this.api}/empData2/${id}.json`, { isDeleted: true });
+  getSingleEmployee(id: any) {
+    return this.http.get<any>(`${this.api}/${id}`)
   }
 
   updateEmployee(id: any, data:any){
-    return this.http.put(`${this.api}/empData2/${id}.json`, data)
+    return this.http.put(`${this.api}/${id}`, data)
   }
 
-
+  deleteEmployee(id: any): Observable<any> {
+    return this.http.delete(`${this.api}/${id}`);
+  }
 }

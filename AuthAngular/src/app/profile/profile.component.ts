@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
       
       this._authService.updateProfile(updatedData).subscribe(
         (res) => {
-          this._authService.gerUserData(this.token);
+          this._authService.getUserData(this.token);
           
         },
         (err) => console.log(err)
