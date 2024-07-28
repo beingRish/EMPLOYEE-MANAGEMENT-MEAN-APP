@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { config } from '../config';
-import { Observable, exhaustMap, map, of, take } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { Employee } from '../appInterface/emp.interface';
-import { AuthService } from './auth.service';
-import { User } from '../appModels/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +13,6 @@ export class DesignUtilityService {
 
   constructor(
     private http: HttpClient,
-    private _authService: AuthService
   ) { }
 
   saveData(data: any) {
@@ -40,8 +37,12 @@ export class DesignUtilityService {
     return this.http.get<any>(`${this.api}/empData2/${id}.json`)
   }
 
-  deleteEmployee(userId: any): Observable<any> {
-    return this.http.put(`${this.api}/empData2/${userId}.json`, { isDeleted: true });
+  deleteEmployee(id: any): Observable<any> {
+    return this.http.put(`${this.api}/empData2/${id}.json`, { isDeleted: true });
+  }
+
+  updateEmployee(id: any, data:any){
+    return this.http.put(`${this.api}/empData2/${id}.json`, data)
   }
 
 

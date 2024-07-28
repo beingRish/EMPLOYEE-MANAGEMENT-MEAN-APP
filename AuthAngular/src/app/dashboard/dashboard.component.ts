@@ -13,13 +13,14 @@ import { AuthService } from '../appServices/auth.service';
 export class DashboardComponent implements OnInit {
 
   user: any;
+  editMode!: boolean;
 
   allUsers: any[] = [];
   constructor(
     private _du: DesignUtilityService,
     private _authService: AuthService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     this._authService.profileInfo.subscribe(res => {
       this.user = res;
@@ -45,8 +46,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['add-employee'])
   }
 
-  viewEmployee(id: any) {
-    this.router.navigate(['employee', id])
+  viewEmployee(id: any, mode: boolean) {
+    this.router.navigate(['employee', id], { queryParams: { EditMode: mode } })
   }
 
   deleteEmployee(userId: string, enterAnimationDuration: string, exitAnimationDuration: string){

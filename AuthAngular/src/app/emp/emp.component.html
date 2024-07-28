@@ -3,42 +3,72 @@
         <div class="card-header">
             <h1>Employee Details</h1>
             <button type="button" class="btn btn-success mt-2 mb-3">
-                <a  routerLink="/dashboard">Back to Dashboard</a>
+                <a routerLink="/dashboard">Back to Dashboard</a>
             </button>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <form class="noEdit">
-                        <div class="form-group">
+                    <form [formGroup]="EditEmployeeForm" (ngSubmit)="onSubmit()"  class="noEdit">
+                        <div class="form-group" *ngIf="!editMode" >
                             <label>Id</label>
                             <span class="value">{{user ? user.id: ''}}</span>
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
-                            <span class="value">{{user ? user.name : ''}}</span>
+                            <label>{{editMode?'Enter':''}} Name</label>
+                            <span class="value" *ngIf="!editMode">{{user ? user.name : ''}}</span>
+                            <div *ngIf="editMode" class="input-group flex-nowrap mt-2">
+                                <span class="input-group-text text-muted" id="addon-wrapping">Name</span>
+                                <input type="text" class="form-control" formControlName="name">
+                                
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Designation</label>
-                            <span class="value">{{user ? user.designation: ''}}</span>
+                            <label>{{editMode?'Enter':''}} Designation</label>
+                            <span class="value" *ngIf="!editMode">{{user ? user.designation : ''}}</span>
+                            <div *ngIf="editMode" class="input-group flex-nowrap mt-2">
+                                <span class="input-group-text text-muted" id="addon-wrapping">Designation</span>
+                                <input type="text" class="form-control" formControlName="designation">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Deepartment</label>
-                            <span class="value">{{user ? user.dept: ''}}</span>
+                            <label>Department</label>
+                            <span class="value" *ngIf="!editMode">{{user ? user.dept : ''}}</span>
+                            <div class="input-group mt-2" *ngIf="editMode">
+                                <label class="input-group-text">{{editMode?'Choose':''}} Department</label>
+                                <select class="form-select" formControlName="dept">
+                                    <option value="Development">Development</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label>Status</label>
-                            <span class="value" 
-                                [ngClass]="{
+                            <span class="value" *ngIf="!editMode" [ngClass]="{
                                     'text-success': user?.status === 'Active',
                                     'text-danger': user?.status === 'Inactive' 
                                 }">
-                                {{user ? user.status : ''}}</span>
+                                {{user ? user.status : ''}}
+                            </span>
+                            <div class="input-group mt-2" *ngIf="editMode">
+                                <label class="input-group-text">{{editMode?'Set':''}} Status</label>
+                                <select class="form-select" formControlName="status">
+                                    <option class="pt-1 pb-1" value="Active">Active</option>
+                                    <option class="pt-1 pb-1" value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="buttons" *ngIf="editMode">
+                            <button type="submit" class="btn btn-primary mx-2">Save Profile</button>
+                            <button type="button" class="btn btn-secondary mx-2" (click)="onDiscard()">Discard</button>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6 text-center mt-5">
-                    <img width="50%" height="50%" src="../../assets/images/profile2.jpg" class="img-fluid rounded" >
+                <div class="col-md-6 text-center p-3">
+                    <img width="100%" height="100%" src="../../assets/images/profile2.jpg" class="img-fluid rounded">
                 </div>
             </div>
         </div>

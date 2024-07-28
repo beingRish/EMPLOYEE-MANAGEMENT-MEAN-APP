@@ -33,16 +33,17 @@
                                                 }" style="border-radius: 5px;">
                                                 {{user.status}}
                                             </span>
+                                            
                                             <hr>
                                             <div class="gap-10">
                                                 <button class="border border-1 border-primary text-primary bg-white"
                                                     [routerLink]="['employee', user.id]"
-                                                    (click)="viewEmployee(user.id)"><i class="fa fa-eye"
+                                                    (click)="viewEmployee(user.id, editMode)"><i class="fa fa-eye"
                                                         aria-hidden="true"></i>
                                                 </button>
                                                 <button class="border border-1 border-success text-success bg-white"
-                                                    [routerLink]="['employee', user.id]"
-                                                    (click)="viewEmployee(user.id)">
+                                                    [routerLink]="['employee', user.id]" [queryParams]="{EditMode:true}"
+                                                    (click)="viewEmployee(user.id, !editMode)">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
                                                 <button class="border border-1 border-danger text-danger bg-white"
