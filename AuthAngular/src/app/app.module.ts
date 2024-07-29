@@ -26,6 +26,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { EmployeeState } from './store/state/employee.state';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
     // NGXS
 
-    NgxsModule.forRoot([]),
+    NgxsModule.forRoot([EmployeeState]),
     NgxsLoggerPluginModule.forRoot(),NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
