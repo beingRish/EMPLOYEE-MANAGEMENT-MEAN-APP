@@ -23,15 +23,15 @@ export class DesignUtilityService {
     return this.http.get<Employee[]>(this.api);
   }
 
-  getSingleEmployee(id: any) {
+  getSingleEmployee(id: string) {
     return this.http.get<any>(`${this.api}/${id}`)
   }
 
-  updateEmployee(id: any, data:any){
-    return this.http.put(`${this.api}/${id}`, data)
+  updateEmployee(id: any, emp:Employee){
+    return this.http.put(`${this.api}/${id}`, emp)
   }
 
-  deleteEmployee(id: any): Observable<any> {
+  deleteEmployee(id: string): Observable<any> {
     return this.http.delete(`${this.api}/${id}`);
   }
 }

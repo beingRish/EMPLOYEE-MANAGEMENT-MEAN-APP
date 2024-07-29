@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
         const doc = await Employee.find()
         res.status(201).send(doc);
     }
-    catch{
+    catch(err){
         console.error('Error in Post Data:', err);
         res.status(500).send('Internal Server Error')
     }
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
         const doc = await emp.save()
         res.status(201).send(doc);
     }
-    catch{
+    catch(err){
         console.error('Error in Post Data:', err);
         res.status(500).send('Internal Server Error')
     }
@@ -49,7 +49,7 @@ router.get('/:id', async (req, res) => {
             return res.status(400).send('Error in get employee by id');
         }
     }
-    catch{
+    catch(err){
         console.error('Error in Get Single Data:', err);
         res.status(500).send('Internal Server Error');
     }

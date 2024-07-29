@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['employee', id], { queryParams: { EditMode: mode } })
   }
 
-  deleteEmployee(id: string,){
+  onDeleteEmployee(id: string,){
     if(confirm('Do you want to delete this Employee?')){
       this._du.deleteEmployee(id).subscribe(
         (res) => {

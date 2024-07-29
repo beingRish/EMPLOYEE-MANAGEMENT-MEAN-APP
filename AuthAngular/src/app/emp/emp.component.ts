@@ -42,10 +42,10 @@ export class EmpComponent implements OnInit {
         this.editMode = false;
       }
     })
-    this.getEmployee(this.employeeId);
+    this.getSingleEmployee(this.employeeId);
   }
 
-  getEmployee(id: any) {
+  getSingleEmployee(id: any) {
     this._du.getSingleEmployee(id).subscribe(res => {
       this.Employee = res
       this.EditEmployeeForm.patchValue(this.Employee)
@@ -59,7 +59,7 @@ export class EmpComponent implements OnInit {
     if (this.EditEmployeeForm.valid) {
       this._du.updateEmployee(this.employeeId, this.EditEmployeeForm.value).subscribe(
         (res: any) => {
-          this.getEmployee(this.employeeId)
+          this.getSingleEmployee(this.employeeId)
           this.onDiscard()
         },
       );
