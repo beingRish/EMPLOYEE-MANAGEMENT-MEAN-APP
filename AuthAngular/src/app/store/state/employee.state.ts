@@ -9,6 +9,7 @@ import { tap } from "rxjs";
 
 export class EmployeeStateModel {
     employees!: Employee[];
+    employeesLoaded!: boolean
 }
 
 // State
@@ -16,7 +17,8 @@ export class EmployeeStateModel {
 @State<EmployeeStateModel>({
     name: 'employees',
     defaults: {
-        employees : []
+        employees : [],
+        employeesLoaded: false
     }
 })
 
@@ -32,6 +34,12 @@ export class EmployeeState{
         return state.employees
     }
 
+    // Get loaded employees info
+    @Selector()
+    static employeeLoaded(state: EmployeeStateModel){
+        return state.employeesLoaded
+    }
+
     @Action(GetEmployee)
     getEmployees({getState, setState}: StateContext<EmployeeStateModel>){
         return this._du.getEmployeeList().pipe(
@@ -39,7 +47,8 @@ export class EmployeeState{
                 const state = getState();
                 setState({
                     ...state,
-                    employees: res
+                    employees: res,
+                    employeesLoaded: true
                 })
             })
         )

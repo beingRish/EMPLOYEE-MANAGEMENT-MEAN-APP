@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DesignUtilityService } from '../appServices/design-utility.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,7 +6,7 @@ import { AuthService } from '../appServices/auth.service';
 import { Employee } from '../appInterface/emp.interface';
 import { Select, Store } from '@ngxs/store';
 import { GetEmployee } from '../store/actions/employee.action';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EmployeeState } from '../store/state/employee.state';
 
 @Component({
@@ -14,13 +14,15 @@ import { EmployeeState } from '../store/state/employee.state';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   user: any;
   editMode!: boolean;
 
-  // employees: Employee[] = [];
   @Select(EmployeeState.getEmployeeList) employees$!:Observable<Employee[]>;
+
+  @Select(EmployeeState.employeeLoaded) employeeLoaded$!:Observable<boolean>;
+  empLoadedSub!: Subscription;
 
   constructor(
     private _du: DesignUtilityService,
@@ -36,14 +38,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployees()
-
     this.employees$.subscribe(res=>{
       console.log('state slice =>', res);
     })
   }
 
   getEmployees() {
-    this.store.dispatch(new GetEmployee());
+    this.empLoadedSub = this.employeeLoaded$.subscribe(loadedEmployees => {
+      if(!loadedEmployees){
+        this.store.dispatch(new GetEmployee());
+      }
+    })
   }
 
   addEmployee() {
@@ -66,6 +71,11 @@ export class DashboardComponent implements OnInit {
         }
       )
     }
+  }
+
+
+  ngOnDestroy(): void {
+    this.empLoadedSub.unsubscribe()
   }
 
 }
