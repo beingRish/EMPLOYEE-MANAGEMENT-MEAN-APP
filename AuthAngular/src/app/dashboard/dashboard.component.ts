@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../appServices/auth.service';
 import { Employee } from '../appInterface/emp.interface';
+import { Select, Store } from '@ngxs/store';
+import { GetEmployee } from '../store/actions/employee.action';
+import { Observable } from 'rxjs';
+import { EmployeeState } from '../store/state/employee.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +19,15 @@ export class DashboardComponent implements OnInit {
   user: any;
   editMode!: boolean;
 
-  allUsers: any[] = [];
-  employees: Employee[] = [];
+  // employees: Employee[] = [];
+  @Select(EmployeeState.getEmployeeList) employees$!:Observable<Employee[]>;
 
   constructor(
     private _du: DesignUtilityService,
     private _authService: AuthService,
     private router: Router,
     public dialog: MatDialog,
+    private store: Store,
   ) {
     this._authService.profileInfo.subscribe(res => {
       this.user = res;
@@ -31,14 +36,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployees()
+
+    this.employees$.subscribe(res=>{
+      console.log('state slice =>', res);
+    })
   }
 
-  getEmployees(){
-    this._du.getEmployeeList().subscribe((res: Employee[]) => {
-      console.log(res);
-      this.employees = res;
-      
-    })
+  getEmployees() {
+    this.store.dispatch(new GetEmployee());
   }
 
   addEmployee() {
@@ -49,8 +54,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['employee', id], { queryParams: { EditMode: mode } })
   }
 
-  onDeleteEmployee(id: string,){
-    if(confirm('Do you want to delete this Employee?')){
+  onDeleteEmployee(id: string,) {
+    if (confirm('Do you want to delete this Employee?')) {
       this._du.deleteEmployee(id).subscribe(
         (res) => {
           console.log('Deleted Successfully', res);

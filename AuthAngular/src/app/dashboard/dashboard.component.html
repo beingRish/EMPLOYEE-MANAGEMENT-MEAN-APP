@@ -20,7 +20,7 @@
             <div class="row all-users">
                 <div class="col-md-12">
                     <div class="row d-flex">
-                        <div class="col-md-4" *ngFor="let item of employees">
+                        <div class="col-md-4" *ngFor="let item of employees$ | async">
                             <div class="card mb-3" style="max-width: 100%;">
                                 <div class="row g-0">
                                     <div class="col-md-8">
