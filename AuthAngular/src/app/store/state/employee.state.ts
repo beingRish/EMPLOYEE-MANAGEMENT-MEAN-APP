@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Employee } from "src/app/appInterface/emp.interface";
-import { GetEmployee } from "../actions/employee.action";
+import { GetEmployee, SetSelectedEmployee } from "../actions/employee.action";
 import { DesignUtilityService } from "src/app/appServices/design-utility.service";
 import { tap } from "rxjs";
 
@@ -9,7 +9,8 @@ import { tap } from "rxjs";
 
 export class EmployeeStateModel {
     employees!: Employee[];
-    employeesLoaded!: boolean
+    employeesLoaded!: boolean;
+    selectedEmployee!: Employee | null
 }
 
 // State
@@ -18,7 +19,8 @@ export class EmployeeStateModel {
     name: 'employees',
     defaults: {
         employees : [],
-        employeesLoaded: false
+        employeesLoaded: false,
+        selectedEmployee: null
     }
 })
 
@@ -34,10 +36,16 @@ export class EmployeeState{
         return state.employees
     }
 
-    // Get loaded employees info
+    // Get loaded employee from state
     @Selector()
     static employeeLoaded(state: EmployeeStateModel){
         return state.employeesLoaded
+    }
+
+    // Get Selected Employee from state
+    @Selector()
+    static selectedEmployee(state: EmployeeStateModel){
+        return state.selectedEmployee
     }
 
     @Action(GetEmployee)
@@ -52,5 +60,17 @@ export class EmployeeState{
                 })
             })
         )
+    }
+
+    @Action(SetSelectedEmployee)
+    setSelectedEmployee({getState, setState}: StateContext<EmployeeStateModel>, {id}: SetSelectedEmployee) {
+        const state = getState();
+        const empList = state.employees;
+        const index = empList.findIndex(emp => emp._id === id)
+        
+        setState({
+            ...state,
+            selectedEmployee: empList[index]
+        })
     }
 }

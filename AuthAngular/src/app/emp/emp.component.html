@@ -48,8 +48,8 @@
                         <div class="form-group">
                             <label>Status</label>
                             <span class="value" *ngIf="!editMode" [ngClass]="{
-                                    'text-success': Employee?.status === 'Active',
-                                    'text-danger': Employee?.status === 'Inactive' 
+                                    'text-success': Employee.status === 'Active',
+                                    'text-danger': Employee.status === 'Inactive' 
                                 }">
                                 {{Employee ? Employee.status : ''}}
                             </span>

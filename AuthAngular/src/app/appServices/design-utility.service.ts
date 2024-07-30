@@ -23,7 +23,7 @@ export class DesignUtilityService {
     return this.http.get<Employee[]>(this.api);
   }
 
-  getSingleEmployee(id: string) {
+  getEmployeeById(id: string) {
     return this.http.get<any>(`${this.api}/${id}`)
   }
 

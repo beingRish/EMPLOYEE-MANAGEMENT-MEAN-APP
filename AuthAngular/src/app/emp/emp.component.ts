@@ -1,26 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DesignUtilityService } from '../appServices/design-utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Employee } from '../appInterface/emp.interface';
+import { Select, Store } from '@ngxs/store';
+import { SetSelectedEmployee } from '../store/actions/employee.action';
+import { Observable, Subscription } from 'rxjs';
+import { EmployeeState } from '../store/state/employee.state';
 
 @Component({
   selector: 'app-emp',
   templateUrl: './emp.component.html',
   styleUrls: ['./emp.component.css']
 })
-export class EmpComponent implements OnInit {
+export class EmpComponent implements OnInit, OnDestroy {
 
-  Employee: any;
-  employeeId: any;
+  Employee!: Employee;
+  employeeId!: String | null;
   editMode!: boolean;
   EditEmployeeForm!: FormGroup;
-  EmployeeInfo: any;
+
+  @Select(EmployeeState.selectedEmployee) selectedEmployee$!: Observable<Employee>
+  selectedEmpSub!: Subscription;
 
   constructor(
     private _du: DesignUtilityService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -42,24 +50,23 @@ export class EmpComponent implements OnInit {
         this.editMode = false;
       }
     })
-    this.getSingleEmployee(this.employeeId);
+    this.getEmployeeById(this.employeeId);
   }
 
-  getSingleEmployee(id: any) {
-    this._du.getSingleEmployee(id).subscribe(res => {
-      this.Employee = res
-      this.EditEmployeeForm.patchValue(this.Employee)
+  getEmployeeById(id: any) {
+    this.store.dispatch(new SetSelectedEmployee(id));
+    this.selectedEmpSub = this.selectedEmployee$.subscribe(res => {
+      this.Employee = res;
     })
   }
 
-
   onSubmit() {
     console.log();
-    
+
     if (this.EditEmployeeForm.valid) {
       this._du.updateEmployee(this.employeeId, this.EditEmployeeForm.value).subscribe(
         (res: any) => {
-          this.getSingleEmployee(this.employeeId)
+          this.getEmployeeById(this.employeeId)
           this.onDiscard()
         },
       );
@@ -68,6 +75,10 @@ export class EmpComponent implements OnInit {
 
   onDiscard() {
     this.router.navigate([], { queryParams: { EditMode: null } })
+  }
+  
+  ngOnDestroy(): void {
+    this.selectedEmpSub.unsubscribe();
   }
 
 }
