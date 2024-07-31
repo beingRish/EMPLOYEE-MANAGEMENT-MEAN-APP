@@ -10,17 +10,17 @@ export class SetSelectedEmployee {
 }
 
 
-// export class AddEmployee {
-//     static readonly type = '[Emloyee] Add';
-//     constructor(public payload: Employee){}
-// }
+export class AddEmployee {
+    static readonly type = '[Emloyee] Add';
+    constructor(public payload: Employee){}
+}
+
+export class DeleteEmployee {
+    static readonly type = '[Employee] Delete';
+    constructor(public id: string){}
+}
 
 // export class UpdateEmployee {
 //     static readonly type = '[Employee] Update';
 //     constructor(public payload: Employee){}
-// }
-
-// export class DeleteEmployee {
-//     static readonly type = '[Employee] Delete';
-//     constructor(public id: string){}
 // }

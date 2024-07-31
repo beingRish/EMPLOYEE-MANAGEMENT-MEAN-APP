@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DesignUtilityService } from '../appServices/design-utility.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../appServices/auth.service';
 import { Employee } from '../appInterface/emp.interface';
 import { Select, Store } from '@ngxs/store';
-import { GetEmployee } from '../store/actions/employee.action';
+import { DeleteEmployee, GetEmployee } from '../store/actions/employee.action';
 import { Observable, Subscription } from 'rxjs';
 import { EmployeeState } from '../store/state/employee.state';
 
@@ -25,7 +24,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   empLoadedSub!: Subscription;
 
   constructor(
-    private _du: DesignUtilityService,
     private _authService: AuthService,
     private router: Router,
     public dialog: MatDialog,
@@ -39,7 +37,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getEmployees()
     this.employees$.subscribe(res=>{
-      console.log('state slice =>', res);
     })
   }
 
@@ -61,18 +58,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onDeleteEmployee(id: string,) {
     if (confirm('Do you want to delete this Employee?')) {
-      this._du.deleteEmployee(id).subscribe(
-        (res) => {
-          console.log('Deleted Successfully', res);
-          this.getEmployees();
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
+      this.store.dispatch(new DeleteEmployee(id))
+      this.getEmployees();
     }
   }
-
 
   ngOnDestroy(): void {
     this.empLoadedSub.unsubscribe()

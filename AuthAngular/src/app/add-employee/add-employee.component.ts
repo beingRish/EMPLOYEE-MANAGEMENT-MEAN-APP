@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DesignUtilityService } from '../appServices/design-utility.service';
 import { Router } from '@angular/router';
+import { AddEmployee } from '../store/actions/employee.action';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-add-employee',
@@ -14,9 +15,9 @@ export class AddEmployeeComponent implements OnInit{
   data: {} = {}
 
   constructor(
-    private _du: DesignUtilityService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -28,21 +29,14 @@ export class AddEmployeeComponent implements OnInit{
   })
   }
 
-  
-
   onBack() {
     this.router.navigate(['/dashboard'])
   }
 
-
   onSubmit(): void {
     if (this.addEmployeeForm.valid) {
-      this._du.addEmployee(this.addEmployeeForm.value).subscribe(
-        (res: any) => {
-          this.onBack()
-          console.log('Employee added successfully', res);
-        },
-      );
+      this.store.dispatch(new AddEmployee(this.addEmployeeForm.value));
+      this.onBack()
     } else {
       console.error('Form is invalid');
     }

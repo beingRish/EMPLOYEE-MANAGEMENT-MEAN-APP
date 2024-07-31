@@ -47,11 +47,11 @@
 
                         <div class="form-group">
                             <label>Status</label>
-                            <span class="value" *ngIf="!editMode" [ngClass]="{
+                            <span class="value" *ngIf="!editMode && Employee && Employee !== undefined" [ngClass]="{
                                     'text-success': Employee.status === 'Active',
                                     'text-danger': Employee.status === 'Inactive' 
                                 }">
-                                {{Employee ? Employee.status : ''}}
+                                {{Employee && Employee !== undefined ? Employee.status : ''}}
                             </span>
                             <div class="input-group mt-2" *ngIf="editMode">
                                 <label class="input-group-text">{{editMode?'Set':''}} Status</label>

@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Employee } from "src/app/appInterface/emp.interface";
-import { GetEmployee, SetSelectedEmployee } from "../actions/employee.action";
+import { AddEmployee, DeleteEmployee, GetEmployee, SetSelectedEmployee } from "../actions/employee.action";
 import { DesignUtilityService } from "src/app/appServices/design-utility.service";
-import { tap } from "rxjs";
+import { of, tap } from "rxjs";
 
 // State Model
 
@@ -48,6 +48,7 @@ export class EmployeeState{
         return state.selectedEmployee
     }
 
+    // Get Employees to State
     @Action(GetEmployee)
     getEmployees({getState, setState}: StateContext<EmployeeStateModel>){
         return this._du.getEmployeeList().pipe(
@@ -62,15 +63,57 @@ export class EmployeeState{
         )
     }
 
+    // Get Single Employee to State
     @Action(SetSelectedEmployee)
     setSelectedEmployee({getState, setState}: StateContext<EmployeeStateModel>, {id}: SetSelectedEmployee) {
         const state = getState();
         const empList = state.employees;
-        const index = empList.findIndex(emp => emp._id === id)
+        const index = empList.findIndex(emp => emp._id === id);
         
-        setState({
-            ...state,
-            selectedEmployee: empList[index]
-        })
+        if(empList.length > 0){
+            setState({
+                ...state,
+                selectedEmployee: empList[index]
+            });
+            return of();
+        }else{
+            return this._du.getEmployeeById(id).pipe(tap((res: Employee) => {     
+                const state = getState();
+                const empList = [res]
+
+                setState({
+                    ...state,
+                    employees: empList,
+                    selectedEmployee: empList[0]
+                })
+            }))
+        }
+    }
+
+    // Add Employee to State
+    @Action(AddEmployee)
+    addEmployee({getState, patchState}: StateContext<EmployeeStateModel>, {payload}: AddEmployee){
+        return this._du.addEmployee(payload).pipe(tap((res: any) => {
+            const state = getState();
+
+            patchState({
+                employees: [...state.employees, res]
+            })
+        }))
+    }
+
+    // Delete Employee to State
+    @Action(DeleteEmployee)
+    deleteEmployee({getState, setState}: StateContext<EmployeeStateModel>, {id}: DeleteEmployee){
+        return this._du.deleteEmployee(id).pipe(tap((res: Employee) => {
+            const state = getState();
+            
+            const  filteredEmployees = state.employees.filter(emp => emp._id !== id)
+
+            setState({
+                ...state,
+                employees: filteredEmployees
+            })
+        }))
     }
 }
