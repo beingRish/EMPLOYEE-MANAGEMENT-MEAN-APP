@@ -16,22 +16,22 @@ export class DesignUtilityService {
   ) { }
 
   addEmployee(emp: Employee){
-    return this.http.post(this.api, emp);
+    return this.http.post<Employee>(this.api, emp);
   }
 
-  getEmployeeList() : Observable<Employee[]> {
+  getEmployeeList(){
     return this.http.get<Employee[]>(this.api);
   }
 
-  getEmployeeById(id: string) {
-    return this.http.get<any>(`${this.api}/${id}`)
+  getEmployeeById(id: string): Observable<Employee>  {
+    return this.http.get<Employee>(`${this.api}/${id}`)
   }
 
-  updateEmployee(id: any, emp:Employee){
-    return this.http.put(`${this.api}/${id}`, emp)
+  updateEmployee(id: string, emp:Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.api}/${id}`, emp)
   }
 
-  deleteEmployee(id: string): Observable<any> {
+  deleteEmployee(id: string){
     return this.http.delete(`${this.api}/${id}`);
   }
 }

@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DesignUtilityService } from '../appServices/design-utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from '../appInterface/emp.interface';
 import { Select, Store } from '@ngxs/store';
-import { SetSelectedEmployee } from '../store/actions/employee.action';
-import { Observable, Subscription } from 'rxjs';
+import { SetSelectedEmployee, UpdateEmployee } from '../store/actions/employee.action';
+import { Observable, Subscription, tap } from 'rxjs';
 import { EmployeeState } from '../store/state/employee.state';
 
 @Component({
@@ -16,7 +15,7 @@ import { EmployeeState } from '../store/state/employee.state';
 export class EmpComponent implements OnInit, OnDestroy {
 
   Employee!: Employee;
-  employeeId!: String | null;
+  employeeId!: any;
   editMode!: boolean;
   EditEmployeeForm!: FormGroup;
 
@@ -24,7 +23,6 @@ export class EmpComponent implements OnInit, OnDestroy {
   selectedEmpSub!: Subscription;
 
   constructor(
-    private _du: DesignUtilityService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
@@ -55,23 +53,38 @@ export class EmpComponent implements OnInit, OnDestroy {
 
   getEmployeeById(id: any) {
     this.store.dispatch(new SetSelectedEmployee(id));
-    this.selectedEmpSub = this.selectedEmployee$.subscribe(res => {
+    this.selectedEmpSub = this.selectedEmployee$.pipe(
+      tap(employee => {
+        this.Employee = employee;
+        if (this.editMode) {
+          this.prefillForm(employee);
+        }
+      })
+    ).subscribe(res => {
       this.Employee = res;
     })
   }
 
-  onSubmit() {
-    console.log();
+  prefillForm(employee: Employee) {
+    this.EditEmployeeForm.patchValue({
+      name: employee.name,
+      designation: employee.designation,
+      dept: employee.dept,
+      status: employee.status
+    });
+  }
 
+
+  onSubmit() {
     if (this.EditEmployeeForm.valid) {
-      this._du.updateEmployee(this.employeeId, this.EditEmployeeForm.value).subscribe(
-        (res: any) => {
-          this.getEmployeeById(this.employeeId)
-          this.onDiscard()
-        },
-      );
+      this.store.dispatch(new UpdateEmployee({...this.EditEmployeeForm.value, _id: this.employeeId}))
+        .subscribe(() => {
+          this.getEmployeeById(this.employeeId); 
+          this.onDiscard();
+        })
     }
   }
+  
 
   onDiscard() {
     this.router.navigate([], { queryParams: { EditMode: null } })

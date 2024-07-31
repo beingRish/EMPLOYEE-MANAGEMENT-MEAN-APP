@@ -20,7 +20,7 @@ export class DeleteEmployee {
     constructor(public id: string){}
 }
 
-// export class UpdateEmployee {
-//     static readonly type = '[Employee] Update';
-//     constructor(public payload: Employee){}
-// }
+export class UpdateEmployee {
+    static readonly type = '[Employee] Update';
+    constructor(public payload: Employee){}
+}
